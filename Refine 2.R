@@ -15,3 +15,18 @@ titanic$embarked[is.na(titanic$embarked)] <- "S"
 #Change NA in "age" column to the mean of all other ages
 titanic$age[is.na(titanic$age)] <- mean(titanic$age, na.rm = TRUE)
 
+#3: Lifeboat
+#Change NA in "boat" column to a string "None" (an "NA" string seemed confusing)
+titanic$boat[is.na(titanic$boat)] <- "None"
+
+#4: Cabin
+#Create a new column called "has_cabin_number" that is 1 if TRUE and 0 if FALSE
+
+#First, I replaced NA values with "None" strings to make the values more easily workable.
+titanic$cabin[is.na(titanic$cabin)] <- "None"
+
+#Then, I added the column with a 1 if the cabin was not "None" and a 0 if it was
+titanic <- titanic %>% mutate(has_cabin_number = as.numeric(titanic$cabin != "None"))
+
+#Output to a clean file
+write_csv(titanic, "titanic_clean.csv")
